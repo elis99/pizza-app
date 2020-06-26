@@ -1,12 +1,24 @@
 import routes from 'vue-auto-routing'
+import { createRouterLayout } from 'vue-router-layout'
 
 import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
 
+const RouterLayout = createRouterLayout(layout => {
+    return import('./layouts/' + layout + '.vue')
+  })
+
 export default new Router({
-    routes,
+    hashbang: false,
     mode: 'history',
-    base: '/',
+    routes: [
+        {
+        path: '/',
+        component: RouterLayout,
+        children: routes
+        }
+    ]
 })
+
