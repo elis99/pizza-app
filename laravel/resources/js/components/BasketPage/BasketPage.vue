@@ -16,8 +16,20 @@
             </div>
             </li>
         </ul>
+        <h4><b>Total price:</b></h4>
+        <div>
+            <h5>
+                 100 euro / 100 dollars
+            </h5>
+            (including delivery)
+        </div>
 
-        <SubmitButton :color="'green'" :buttonEvent="goToPageMakeOrder" :buttonText="'Confirm Order'"/>
+        <SubmitButton
+            :color="'green'"
+            :buttonEvent="goToPageMakeOrder"
+            :buttonText="'Confirm Order'"
+            class="margin-top-30"
+        />
 
     </div>
 </template>
