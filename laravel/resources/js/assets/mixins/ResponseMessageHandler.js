@@ -8,9 +8,9 @@ export default {
         }
     },
     methods: {
-        successHandler: () => ({
+        successHandler: (message) => ({
             type: 'success',
-            message: "The request was successful"
+            message: message || 'The request was successful'
         }),
         errorHandler: err => ({
             type: 'error',

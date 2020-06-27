@@ -1,5 +1,6 @@
 <template>
     <div class="row">
+        <h3>Register</h3>
         <form class="col s12">
             <div class="row">
                 <div class="input-field col s6">

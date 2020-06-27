@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click.prevent="buttonEvent" class="btn btn-primary orange darken-3">
+        <button @click.prevent="buttonEvent" :class="`btn btn-primary ${color} darken-3`">
             {{buttonText}}
         </button>
     </div>
@@ -11,11 +11,15 @@ export default {
     props: {
         buttonText: {
             type: String,
-            default: "Submit"
+            default: "Submit",
         },
         buttonEvent: {
             required: true,
             type: Function
+        },
+        color: {
+            type: String,
+            default: 'orange'
         }
     },
 }
