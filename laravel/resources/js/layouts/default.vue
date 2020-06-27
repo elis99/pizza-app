@@ -1,7 +1,9 @@
 <template>
     <div>
         <Navbar/>
-        <router-view/>
+        <div class="container margin-top-30">
+            <router-view/>
+        </div>
     </div>
 </template>
 
@@ -16,5 +18,5 @@ export default {
 </script>
 
 <style>
-
+    @import url('./style.css');
 </style>

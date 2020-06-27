@@ -2,6 +2,16 @@
     <div class="row">
         <form class="col s12">
             <div class="row">
+                <div class="input-field col s6">
+                    <input v-model="data.first_name" id="first_name" type="text" class="validate" required>
+                    <label for="first_name">First Name*</label>
+                </div>
+                <div class="input-field col s6">
+                    <input  v-model="data.last_name" id="last_name" type="text" class="validate" required>
+                    <label for="last_name">Last Name*</label>
+                </div>
+            </div>
+            <div class="row">
                 <div class="input-field col s12">
                 <input v-model="data.email" id="email" type="email" class="validate" required>
                 <label for="email">Email*</label>
@@ -13,11 +23,11 @@
                 <label for="password">Password*</label>
                 </div>
             </div>
-            <SubmitButton :buttonEvent="login" :buttonText="'Login'"/>
-            <div class="not-registered">Not registered? <a href="/register">Register!</a></div>
+            <SubmitButton :buttonEvent="register" :buttonText="'Register'"/>
             <div v-if="this.responseMessageObj.message">
                <ResponseCard :messageObj="responseMessageObj"/>
             </div>
+            <div class="registered">Already registered? <a href="/login">Login!</a></div>
         </form>
     </div>
 </template>
@@ -33,13 +43,15 @@ export default {
     data() {
         return {
             data: {
+                first_name: '',
+                last_name: '',
                 email: '',
                 password: ''
             }
         }
     },
     methods: {
-        async login() {
+        async register() {
             try {
                 const response = await ApiAuth.register(this.data)
                 this.responseMessageObj = this.successHandler()
