@@ -2,3 +2,14 @@
     width:85px;
     height: auto;
 }
+.basket {
+    height: 100%;
+}
+.basket-icon {
+    padding: 5px;
+}
+.basket-count {
+    font-weight: bold;
+    position: relative;
+    bottom: 13px;
+}

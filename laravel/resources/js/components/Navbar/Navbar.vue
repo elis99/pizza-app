@@ -12,6 +12,10 @@
         <li :class="checkIsActiveClass('/login')"><a href="/login">Login</a></li>
         <li :class="checkIsActiveClass('/')"><a href="/">Pizza</a></li>
       </ul>
+      <a href="/basket" class="waves-effect waves-light btn right orange basket">
+        <div class="material-icons basket-icon">shopping_basket</div>
+        <div class="basket-count">{{basketTotal}}</div>
+      </a>
     </div>
   </nav>
 </template>
@@ -20,7 +24,8 @@
 export default {
     data(){
         return {
-            currentRoutePath: this.$route.path
+            currentRoutePath: this.$route.path,
+            basketTotal: 0
         }
     },
     methods: {
@@ -28,8 +33,10 @@ export default {
             if(this.currentRoutePath === routePath) return 'active'
         }
     },
-    created(){
-    
+    watch:{
+        '$store.state.basketTotal': function(){
+            this.basketTotal = this.$store.state.basketTotal
+        }
     }
 }
 </script>
