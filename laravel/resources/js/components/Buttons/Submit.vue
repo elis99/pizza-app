@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <button @click.prevent="buttonEvent" :class="`btn btn-primary ${color} darken-3`">
-            {{buttonText}}
-        </button>
-    </div>
+    <button @click.prevent="buttonEvent" :class="`btn btn-primary ${color} darken-3`">
+        {{buttonText}}
+    </button>
 </template>
 
 <script>

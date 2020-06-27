@@ -19,7 +19,7 @@
             <label for="email">Address</label>
             </div>
         </div>
-            <SubmitButton :color="'green'" :buttonEvent="makeOrder" :buttonText="'Make Order'"/>
+        <SubmitButton :color="'green'" :buttonEvent="makeOrder" :buttonText="'Make Order'"/>
         </form>
          <div v-if="responseMessageObj.message">
                <ResponseCard :messageObj="responseMessageObj"/>

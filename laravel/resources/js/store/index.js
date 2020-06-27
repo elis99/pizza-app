@@ -14,19 +14,22 @@ const store = new Vuex.Store({
     },
     mutations: {
         addToBasket (state, payloud) {
-        state.basketTotal++
+            state.basketTotal++
 
-        let foundItem = state.basket.find( item => item.id === payloud.id)
+            let foundItem = state.basket.find( item => item.id === payloud.id)
 
-        if (foundItem) {
-            foundItem.count++
-        } else {
-            state.basket.push({
-                id: payloud.id,
-                count: 1
-            })
-        }
+            if (foundItem) {
+                foundItem.count++
+            } else {
+                state.basket.push({
+                    id: payloud.id,
+                    count: 1
+                })
+            }
         },
+        clearBasket(state) {
+            state.basketTotal = 0
+        }
     }
 })
 

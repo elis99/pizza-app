@@ -23,28 +23,40 @@
             </h5>
             (including delivery)
         </div>
-
-        <SubmitButton
-            :color="'green'"
-            :buttonEvent="goToPageMakeOrder"
-            :buttonText="'Confirm Order'"
-            class="margin-top-30"
-        />
-
+        <div  class="margin-top-30">
+             <SubmitButton
+                :color="'green'"
+                :buttonEvent="goToPageMakeOrder"
+                :buttonText="'Confirm Order'"
+            />
+            <SubmitButton :color="'red'" :buttonEvent="clearBasket" :buttonText="'Clear Basket'"/>
+        </div>
+        <div v-if="this.responseMessageObj.message">
+               <ResponseCard :messageObj="responseMessageObj"/>
+        </div>
     </div>
 </template>
 
 <script>
 import SubmitButton from '@/components/Buttons/Submit'
+import ResponseMessageHandler from '@/assets/mixins/ResponseMessageHandler'
+import ResponseCard from '@/components/Common/ResponseCard'
 
 export default {
+    mixins: [ResponseMessageHandler],
     methods: {
         goToPageMakeOrder() {
            this.$router.push({ path: '/make_order' })
+        },
+        clearBasket() {
+            window.sessionStorage.clear()
+            this.$store.commit('clearBasket')
+            this.responseMessageObj = this.successHandler('Basket was cleared!')
         }
     },
     components: {
-        SubmitButton
+        SubmitButton,
+        ResponseCard
     }
 }
 </script>
