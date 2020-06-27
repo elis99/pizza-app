@@ -15,10 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('{any}', function () {
     return view('app');
-});
-
-Route::get('/', function () {
-    return view('app');
-});
-
-Route::get('/home', 'HomeController@index')->name('home');
+})->where('any', '.*');
