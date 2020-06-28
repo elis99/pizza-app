@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Consts\Cash;
 
 class Pizza extends Model
 {
@@ -11,4 +12,8 @@ class Pizza extends Model
         return $this->belongsToMany(Order::class);
     }
 
+    public function getPriceInEur()
+    {
+        return $this->price * Cash::ONE_EUR_IN_USD;
+    }
 }

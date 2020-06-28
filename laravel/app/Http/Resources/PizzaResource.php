@@ -15,9 +15,11 @@ class PizzaResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => $this->price,
+            'price_eur' => $this->getPriceInEur(),
+            'price_usd' => $this->price,
             'img_url' => $this->img_url
         ];
     }

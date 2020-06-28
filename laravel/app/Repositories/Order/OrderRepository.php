@@ -14,9 +14,8 @@ class OrderRepository implements OrderInterface {
 
     public function create(array $data): void
     {
-        $user = Auth::user();
-
-        $order = $user->orders()
+        $order = Auth::user()
+            ->orders()
             ->create($data);
 
         $pizzasForSync = [];
@@ -31,9 +30,16 @@ class OrderRepository implements OrderInterface {
 
     public function getAllOfAuthUser(): Collection
     {
-        $user = Auth::user();
+        return Auth::user()->orders;
+    }
 
-        return $user->orders->get();
+    public function calcTotalPrice(array $data)
+    {
+        $pizza_ids = [];
+
+        foreach ($data['pizzas'] as $pizza) {
+            $pizza_ids[] = $pizza['pizza_id'];
+        }
     }
 
 }

@@ -2,8 +2,7 @@
 
 namespace App\Repositories\Pizza;
 
-use Illuminate\Support\Collection;
-
+use Illuminate\Database\Eloquent\Collection;
 interface PizzaInterface {
 
     public function all(): Collection;

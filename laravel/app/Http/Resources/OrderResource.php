@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\PizzaResource;
 
 class OrderResource extends JsonResource
 {
@@ -15,11 +16,9 @@ class OrderResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'first_name' => $this->user->first_name,
-            'last_name' => $this->user->last_name,
+            'id' => $this->id,
             'address' => $this->address,
-            'user' => $this->user,
-            'pizzas' => $this->pizzas,
+            'pizzas' => PizzaResource::collection($this->pizzas),
         ];
     }
 }

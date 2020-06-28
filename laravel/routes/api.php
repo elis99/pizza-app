@@ -20,7 +20,7 @@ Route::prefix('v1')->group(function () {
         ->name('verification.verify');
     Route::post('user/login', 'Auth\LoginController@login');
 
-    Route::get('pizza\all', 'PizzaController@all');
+    Route::get('pizza/all', 'PizzaController@all');
 
     Route::prefix('order')
         ->middleware(['auth:api'])
