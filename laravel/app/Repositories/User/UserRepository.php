@@ -22,7 +22,7 @@ class UserRepository implements UserInterface {
         return $this->modelClass::create($data);
     }
 
-    public function checkAndGetUserWithToken(array $data)
+    public function checkAndGetUserWithToken(array $data): array
     {
         $foundUser = $this->modelClass::where('email', $data['email'])
             ->first();

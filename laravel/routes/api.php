@@ -16,7 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::post('user', 'Auth\RegisterController@register');
-    Route::post('user/login', 'Auth\LoginController@login');
     Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
+
+    Route::middleware(['verified'])->group(function ()   {
+        Route::post('user/login', 'Auth\LoginController@login');
+    });
+
+    Route::get('pizzas', 'PizzaController@all');
 });
 

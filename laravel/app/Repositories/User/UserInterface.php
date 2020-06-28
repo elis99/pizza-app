@@ -8,4 +8,5 @@ interface UserInterface {
 
     public function create(array $data): User;
 
+    public function checkAndGetUserWithToken(array $data): array;
 }
