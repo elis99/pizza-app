@@ -6,6 +6,8 @@ use App\Models\Order;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Pizza;
+
 class OrderRepository implements OrderInterface {
 
     protected $modelClass = Order::class;
@@ -14,18 +16,17 @@ class OrderRepository implements OrderInterface {
     {
         $user = Auth::user();
 
-        $order = $user->orders()->create($data);
+        $order = $user->orders()
+            ->create($data);
 
-        // dd($data['pizzas']);
+        $pizzasForSync = [];
 
-        $order->pizzas()->insert([
-            [
-                'pizza_id'=> 1,
-                'amount' => 3
+        foreach ($data['pizzas'] as $pizza) {
+            $pizzasForSync[$pizza['pizza_id']] = ['amount' => $pizza['amount']];
+        }
 
-            ]
-        ]);
-
+        $order->pizzas()
+            ->sync($pizzasForSync);
     }
 
     public function getAllOfAuthUser(): Collection
