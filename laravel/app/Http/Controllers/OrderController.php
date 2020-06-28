@@ -6,8 +6,7 @@ use App\Http\Requests\CreateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Repositories\Order\OrderRepository;
 
-
-class PizzaController extends Controller
+class OrderController extends Controller
 {
     protected $orderRepository;
 

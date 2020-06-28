@@ -14,7 +14,18 @@ class OrderRepository implements OrderInterface {
     {
         $user = Auth::user();
 
-        $user->order->create($data);
+        $order = $user->orders()->create($data);
+
+        // dd($data['pizzas']);
+
+        $order->pizzas()->insert([
+            [
+                'pizza_id'=> 1,
+                'amount' => 3
+
+            ]
+        ]);
+
     }
 
     public function getAllOfAuthUser(): Collection

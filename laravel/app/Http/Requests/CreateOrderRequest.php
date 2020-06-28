@@ -26,7 +26,7 @@ class CreateOrderRequest extends FormRequest
         return [
             'address' => 'required|string|min:1|max:255',
             'pizzas' => 'required|array',
-            'pizzas.*' => 'required|object'
+            'pizzas.*' => 'required'
         ];
     }
 }

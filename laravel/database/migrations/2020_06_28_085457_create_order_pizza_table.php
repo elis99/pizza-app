@@ -15,6 +15,15 @@ class CreateOrderPizzaTable extends Migration
     {
         Schema::create('order_pizza', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('pizza_id');
+            $table->foreign('pizza_id')
+                ->references('id')
+                ->on('pizzas');
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders');
+            $table->unsignedInteger('amount');
             $table->timestamps();
         });
     }
