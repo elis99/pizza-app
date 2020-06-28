@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function () {
-    Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');;
     Route::post('user', 'Auth\RegisterController@register');
+    Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
 });
 
