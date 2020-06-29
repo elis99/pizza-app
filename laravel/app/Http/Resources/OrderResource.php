@@ -19,6 +19,8 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'address' => $this->address,
             'pizzas' => PizzaResource::collection($this->pizzas),
+            'total_usd' => $this->getTotalInUsd(),
+            'total_eur' => $this->getTotalInEur()
         ];
     }
 }
