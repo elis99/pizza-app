@@ -18,14 +18,9 @@ class OrderRepository implements OrderInterface {
             ->orders()
             ->create($data);
 
-        $pizzasForSync = [];
+        $order->storePizzas($data['pizzas']);
 
-        foreach ($data['pizzas'] as $pizza) {
-            $pizzasForSync[$pizza['pizza_id']] = ['amount' => $pizza['amount']];
-        }
-
-        $order->pizzas()
-            ->sync($pizzasForSync);
+        $order->storeTotalPrices();
     }
 
     public function getAllOfAuthUser(): Collection
