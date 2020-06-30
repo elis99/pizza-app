@@ -16,6 +16,10 @@ class Order extends Model
         'user_id'
     ];
 
+    protected $casts = [
+        'created_at' => 'date_time'
+    ];
+
     public function pizzas()
     {
         return $this->belongsToMany(Pizza::class)
@@ -45,12 +49,12 @@ class Order extends Model
             ->sync($pizzasForSync);
     }
 
-    public function storeTotalPrices()
+    public function storeTotalPrices(array $pizzas)
     {
         $this->currencies()
             ->sync([
-                Currency::USD => ['total_price' => $this->getTotalPriceInUsd($this->pizzas)],
-                Currency::EUR => ['total_price' => $this->getTotalPriceInEur($this->pizzas)]
+                Currency::USD => ['total_price' => $this->getTotalPriceInUsd($pizzas)],
+                Currency::EUR => ['total_price' => $this->getTotalPriceInEur($pizzas)]
             ]);
     }
 }

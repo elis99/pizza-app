@@ -22,7 +22,7 @@ class OrderRepository implements OrderInterface {
 
         $order->storePizzas($data['pizzas']);
 
-        $order->storeTotalPrices();
+        $order->storeTotalPrices($data['pizzas']);
     }
 
     public function getAllOfAuthUser(): Collection
@@ -32,17 +32,9 @@ class OrderRepository implements OrderInterface {
 
     public function calcPreOrderPrice(array $data)
     {
-        $pizza_ids = [];
-
-        foreach ($data['pizzas'] as $pizza) {
-            $pizza_ids[] = $pizza['pizza_id'];
-        }
-
-        $pizzas = Pizza::find($pizza_ids);
-
         return [
-            'total_usd' => $this->getTotalPriceInUsd($pizzas),
-            'total_eur' => $this->getTotalPriceInEur($pizzas)
+            'total_usd' => $this->getTotalPriceInUsd($data['pizzas']),
+            'total_eur' => $this->getTotalPriceInEur($data['pizzas'])
         ];
     }
 

@@ -21,7 +21,8 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'address' => $this->address,
             'pizzas' => PizzaResource::collection($this->pizzas),
-            'total_prices' => CurrencyResource::collection($this->currencies)
+            'total_prices' => CurrencyResource::collection($this->currencies),
+            'created_at' => $this->created_at
         ];
     }
 }

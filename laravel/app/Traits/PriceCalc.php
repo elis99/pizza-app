@@ -2,6 +2,7 @@
 namespace App\Traits;
 
 use App\Consts\Cash;
+use App\Models\Pizza;
 
 trait PriceCalc {
 
@@ -9,10 +10,12 @@ trait PriceCalc {
     {
         $pricesForEachPizza = collect();
 
-        $pizzas->each(function($pizza) use (&$pricesForEachPizza){
-                $price = $pizza->price * $pizza->pivot->amount;
-                $pricesForEachPizza->push($price);
-            });
+        foreach($pizzas as $pizza) {
+            $pizzaModel = Pizza::find($pizza['pizza_id']);
+
+            $price = $pizzaModel->price * $pizza['amount'];
+            $pricesForEachPizza->push($price);
+        }
 
         return $pricesForEachPizza->sum() * Cash::DELIVERY_PRICE_USD;
     }
