@@ -27,7 +27,13 @@ class OrderRepository implements OrderInterface {
 
     public function getAllOfAuthUser(): Collection
     {
-        return Auth::user()->orders;
+        $orders = Auth::user()
+            ->orders()
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return $orders;
     }
 
     public function calcPreOrderPrice(array $data)
