@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function () {
         ->group(function(){
             Route::post('/', 'OrderController@create');
             Route::get('/', 'OrderController@getAllOfAuthUser');
+            Route::post('/calc', 'OrderController@calcPreOrderPrice');
         });
 });
 

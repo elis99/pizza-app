@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Http\Requests\PreOrderRequest;
+use App\Http\Requests\CreateOrderRequest;
 use App\Repositories\Order\OrderRepository;
 
 class OrderController extends Controller
@@ -27,5 +28,12 @@ class OrderController extends Controller
         $userOrders = $this->orderRepository->getAllOfAuthUser();
 
         return response(OrderResource::collection($userOrders), 200);
+    }
+
+    public function calcPreOrderPrice(PreOrderRequest $request)
+    {
+        $total = $this->orderRepository->calcPreOrderPrice($request->validated());
+
+        return response($total, 200);
     }
 }

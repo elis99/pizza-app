@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Consts\Cash;
 use App\Consts\Currency;
 use App\Models\Currency as CurrencyModel;
+use App\Traits\PriceCalc;
 
 class Order extends Model
 {
+    use PriceCalc;
+
     protected $fillable = [
         'address',
         'user_id'
@@ -47,27 +49,9 @@ class Order extends Model
     {
         $this->currencies()
             ->sync([
-                Currency::USD => ['total_price' => $this->getTotalPriceInUsd()],
-                Currency::EUR => ['total_price' => $this->getTotalPriceInEur()]
+                Currency::USD => ['total_price' => $this->getTotalPriceInUsd($this->pizzas)],
+                Currency::EUR => ['total_price' => $this->getTotalPriceInEur($this->pizzas)]
             ]);
-    }
-
-    public function getTotalPriceInUsd()
-    {
-        $pricesForEachPizza = collect();
-
-        $this->pizzas
-            ->each(function($pizza) use (&$pricesForEachPizza){
-                $price = $pizza->price * $pizza->pivot->amount;
-                $pricesForEachPizza->push($price);
-            });
-
-        return $pricesForEachPizza->sum() * Cash::DELIVERY_PRICE_USD;
-    }
-
-    public function getTotalPriceInEur()
-    {
-        return $this->getTotalPriceInUsd() * Cash::ONE_EUR_IN_USD;
     }
 }
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateOrderRequest extends FormRequest
+class PreOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class CreateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'address' => 'required|string|min:1|max:255',
             'pizzas' => 'required|array',
             'pizzas.*' => 'required|array',
             'pizzas.*.pizza_id' => 'required|integer|exists:pizzas,id',
