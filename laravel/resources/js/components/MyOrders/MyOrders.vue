@@ -2,20 +2,22 @@
   <div>
       <div class="basket-page">
         <h3>My Orders</h3>
-        <ul class="collection">
+        <ul v-for="order in myOrders" :key="`my-order-${order.id}`" class="collection">
             <li class="collection-item avatar">
             <i class="material-icons circle red">local_pizza</i>
-            <span class="title">Pizza name</span>
-            <span>x <b>10</b></span>
+            <span
+                v-for="(pizza, i) in order.pizzas"
+                :key="pizza.id"
+                class="title"
+            >
+            {{pizza.name}}<span v-if="checkIsSymble(i, order.pizzas)">, </span>
+            </span>
             <div class="color-green">
-                 <span>
-                    100 euro
-                </span> /
-                <span>
-                    100 dollars
+                 <span v-for="(price, i) in order.total_prices" :key="`total-price-${price.name}`">
+                     {{price.total_price}} {{price.name}}<span v-if="checkIsSymble(i, order.total_prices)"> / </span>
                 </span>
             </div>
-                <span class="secondary-content">19.05.11</i></span>
+                <span class="secondary-content">{{order.created_at}}</span>
             </li>
         </ul>
   </div>
@@ -38,12 +40,14 @@ export default {
         this.getMyOrders();
     },
     methods: {
+        checkIsSymble(i, array){
+            return i+1 < array.length
+        },
         async getMyOrders() {
             try {
                 this.isLoader = true
 
                 const response = await Api.getMyOrders(this.data)
-                console.log(response, 'RESP')
                 if (response && response.status === 200) {
                     this.myOrders = response.data
                 } else {

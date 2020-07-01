@@ -18,23 +18,25 @@ const store = new Vuex.Store({
         setAuthUser(state, payload) {
             state.user.first_name = payload.user.first_name
             state.user.last_name = payload.user.last_name
-            axios.defaults.headers.common['Authorization'] = `${payload.token.token_type} ${payload.token.access_token}`
+            localStorage.setItem('access_token', payload.token.access_token);
         },
         addToBasket (state, payloud) {
             state.basketTotal++
 
-            let foundItem = state.basket.find( item => item.id === payloud.id)
+            let foundItem = state.basket.find( item => item.pizza_id === payloud.pizza.id)
 
             if (foundItem) {
-                foundItem.count++
+                foundItem.amount++
             } else {
                 state.basket.push({
-                    id: payloud.id,
-                    count: 1
+                    pizza: payloud.pizza,
+                    pizza_id: payloud.pizza.id,
+                    amount: 1
                 })
             }
         },
         clearBasket(state) {
+            state.basket = []
             state.basketTotal = 0
         }
     }

@@ -1,28 +1,33 @@
 <template>
     <div class="basket-page">
         <h3>Basket</h3>
-        <ul class="collection">
+        <ul
+            v-for="data in basketPizzas"
+            :key="`basket-pizza-${data.pizza.id}`"
+            class="collection"
+        >
             <li class="collection-item avatar">
             <i class="material-icons circle red">local_pizza</i>
-            <span class="title">Pizza name</span>
-            <span>x <b>10</b></span>
+            <span class="title">{{data.pizza.name}}</span>
+            <span>x <b>{{data.amount}}</b></span>
             <div class="color-green">
                  <span>
-                    100 euro
+                    {{data.pizza.price_eur * data.amount}} euro
                 </span> /
                 <span>
-                    100 dollars
+                    {{data.pizza.price_usd * data.amount}} dollars
                 </span>
             </div>
             </li>
         </ul>
         <h4><b>Total price:</b></h4>
-        <div>
+        <div v-if="totalPrices">
             <h5>
-                 100 euro / 100 dollars
+                 {{totalPrices.total_eur}}  euro / {{totalPrices.total_usd}} dollars
             </h5>
             (including delivery)
         </div>
+        <Loader v-else />
         <div  class="margin-top-30">
              <SubmitButton
                 :color="'green'"
@@ -41,10 +46,28 @@
 import SubmitButton from '@/components/Buttons/Submit'
 import ResponseMessageHandler from '@/assets/mixins/ResponseMessageHandler'
 import ResponseCard from '@/components/Common/ResponseCard'
+import Api from '@/api/index'
+import Loader from '@/components/Loader/Loader'
 
 export default {
     mixins: [ResponseMessageHandler],
+    data() {
+        return {
+            totalPrices: null,
+            basketPizzas: null
+        }
+    },
+    created() {
+        this.basketPizzas = this.getPizzasFromStore()
+        this.getTotalPrices(this.basketPizzas)
+    },
     methods: {
+        async getTotalPrices(basketPizzas) {
+            this.totalPrices = (await Api.getTotalPrices(basketPizzas)).data
+        },
+        getPizzasFromStore() {
+            return this.$store.state.basket
+        },
         goToPageMakeOrder() {
            this.$router.push({ path: '/make_order' })
         },
@@ -56,7 +79,8 @@ export default {
     },
     components: {
         SubmitButton,
-        ResponseCard
+        ResponseCard,
+        Loader
     }
 }
 </script>

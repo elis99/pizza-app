@@ -39,8 +39,8 @@ class OrderRepository implements OrderInterface {
     public function calcPreOrderPrice(array $data)
     {
         return [
-            'total_usd' => $this->getTotalPriceInUsd($data['pizzas']),
-            'total_eur' => $this->getTotalPriceInEur($data['pizzas'])
+            'total_usd' => $this->getTotalPriceInUsd($data),
+            'total_eur' => $this->getTotalPriceInEur($data)
         ];
     }
 

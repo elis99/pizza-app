@@ -6,7 +6,7 @@ use App\Models\Pizza;
 
 trait PriceCalc {
 
-    public function getTotalPriceInUsd($pizzas)
+    public function getTotalPriceInUsd($pizzas) 
     {
         $pricesForEachPizza = collect();
 
@@ -17,7 +17,7 @@ trait PriceCalc {
             $pricesForEachPizza->push($price);
         }
 
-        return $pricesForEachPizza->sum() * Cash::DELIVERY_PRICE_USD;
+        return $pricesForEachPizza->sum() + Cash::DELIVERY_PRICE_USD;
     }
 
     public function getTotalPriceInEur($pizzas)

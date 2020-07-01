@@ -48,6 +48,9 @@ export default {
                 const response = await ApiAuth.login(this.data)
                 if (response && response.status === 201) {
                     this.setAuthUser(response.data)
+                     this.$router.push({
+                        path: '/my_orders'
+                    });
                 } else {
                    this.checkError(response)
                 }

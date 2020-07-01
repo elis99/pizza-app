@@ -24,10 +24,8 @@ class PreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'pizzas' => 'required|array',
-            'pizzas.*' => 'required|array',
-            'pizzas.*.pizza_id' => 'required|integer|exists:pizzas,id',
-            'pizzas.*.amount' => 'required|integer|min:1',
+            '*.pizza_id' => 'required|integer|exists:pizzas,id',
+            '*.amount' => 'required|integer|min:1',
         ];
     }
 }

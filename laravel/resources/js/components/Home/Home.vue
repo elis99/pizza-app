@@ -11,7 +11,7 @@
             <div class="card-image">
             <img :src="pizza.img_url">
             <span class="card-title">{{pizza.name}}</span>
-            <a @click="addToBasket(1)" class="btn-floating halfway-fab waves-effect waves-light red">
+            <a @click="addToBasket(pizza)" class="btn-floating halfway-fab waves-effect waves-light red">
                 <i class="material-icons">add</i>
             </a>
             </div>
@@ -52,16 +52,12 @@ export default {
         async getPizzas(){
             try {
                 this.pizzas = (await Api.getPizzas()).data;
-                console.log(this.pizzas)
             } catch(e) {
                 console.error(e)
             }
         },
-        async addToBasket(id) {
-            this.$store.commit('addToBasket', {
-                id: id
-            })
-            console.log( this.$store.state.basket)
+        async addToBasket(pizza) {
+            this.$store.commit('addToBasket', {pizza})
         }
     }
 }
