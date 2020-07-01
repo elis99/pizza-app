@@ -1,25 +1,29 @@
 <template>
   <div>
     <h3>Menu</h3>
-    <div class="row">
-        <div class="col s12 m6">
+    <div  v-if="pizzas && pizzas.length > 0" class="row">
+        <div
+            v-for="pizza in pizzas"
+            :key="`pizza-${pizza.id}`"
+            class="col s12 m6"
+        >
         <div class="card">
             <div class="card-image">
-            <img src="https://www.delonghi.com//Global/recipes/multifry/3.jpg">
-            <span class="card-title">Card Title</span>
+            <img :src="pizza.img_url">
+            <span class="card-title">{{pizza.name}}</span>
             <a @click="addToBasket(1)" class="btn-floating halfway-fab waves-effect waves-light red">
                 <i class="material-icons">add</i>
             </a>
             </div>
             <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+            <p>{{pizza.description}}</p>
                 <div class="color-green margin-top-30">
                     <b>
                         <span>
-                            100 euro
+                            {{pizza.price_eur}} euro
                         </span> /
                         <span>
-                            100 dollars
+                            {{pizza.price_usd}} dollars
                         </span>
                     </b>
                 </div>
@@ -27,30 +31,32 @@
 
         </div>
         </div>
-         <!-- <div class="col s12 m6">
-        <div class="card">
-            <div class="card-image">
-            <img src="https://www.delonghi.com//Global/recipes/multifry/3.jpg">
-            <span class="card-title">Card Title</span>
-              <a @click="addToBasket(2)" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-            </div>
-            <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-            </div>
-        </div>
-        </div> -->
     </div>
   </div>
 </template>
 
 <script>
+
+import Api from '@/api/index'
+
 export default {
     data(){
         return {
-
+            pizzas: null
         }
     },
+    created() {
+        this.getPizzas()
+    },
     methods: {
+        async getPizzas(){
+            try {
+                this.pizzas = (await Api.getPizzas()).data;
+                console.log(this.pizzas)
+            } catch(e) {
+                console.error(e)
+            }
+        },
         async addToBasket(id) {
             this.$store.commit('addToBasket', {
                 id: id

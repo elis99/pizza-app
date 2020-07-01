@@ -3,22 +3,22 @@ import axios from 'axios'
 const API_ROUTE = 'api/v1'
 
 export default {
-    register: async (data) => {
-        await axios.post(`${API_ROUTE}/user`, data)
+    register: async data => {
+        return await axios.post(`${API_ROUTE}/user`, data)
             .then((response) => {
-                console.log(response)
+                return response
             })
             .catch((error) => {
-                console.log(error)
+                return error
             })
     },
-    login: async (data) => {
-        await axios.post(`${API_ROUTE}/login`, data)
+    login: async data => {
+        await axios.post(`${API_ROUTE}/user/login`, data)
             .then((response) => {
                 console.log(response)
             })
             .catch((error) => {
-                console.log(error)
+                console.error(error)
             })
     }
 }

@@ -4,27 +4,27 @@
         <form class="col s12">
             <div class="row">
                 <div class="input-field col s6">
-                    <input v-model="data.first_name" id="first_name" type="text" class="validate" required>
+                    <input v-model="data.first_name" id="first_name" type="text" class="validate" required/>
                     <label for="first_name">First Name*</label>
                 </div>
                 <div class="input-field col s6">
-                    <input  v-model="data.last_name" id="last_name" type="text" class="validate" required>
+                    <input  v-model="data.last_name" id="last_name" type="text" class="validate" required/>
                     <label for="last_name">Last Name*</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                <input v-model="data.email" id="email" type="email" class="validate" required>
+                <input v-model="data.email" id="email" type="email" class="validate" required/>
                 <label for="email">Email*</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                <input v-model="data.password" id="password" type="password" class="validate" required>
+                <input v-model="data.password" id="password" min="6" type="password" class="validate" required>
                 <label for="password">Password*</label>
                 </div>
             </div>
-            <SubmitButton :buttonEvent="register" :buttonText="'Register'"/>
+            <SubmitButton :isLoader="isLoader" :buttonEvent="register" :buttonText="'Register'"/>
             <div v-if="this.responseMessageObj.message">
                <ResponseCard :messageObj="responseMessageObj"/>
             </div>
@@ -48,19 +48,25 @@ export default {
                 last_name: '',
                 email: '',
                 password: ''
-            }
+            },
+            isLoader: false
         }
     },
     methods: {
         async register() {
             try {
-                const response = await ApiAuth.register(this.data)
-                this.responseMessageObj = this.successHandler()
-                                console.log('COORRe')
+                this.isLoader = true
 
+                const response = await ApiAuth.register(this.data)
+                if (response && response.status === 201) {
+                    this.responseMessageObj = this.successHandler("Registration almost complete, please check your Email")
+                } else {
+                   this.checkErrorForValidation(response)
+                }
+                this.isLoader = false
             } catch (e) {
-                console.log('eeee', e)
-                this.responseMessageObj = this.errorHandler()
+                this.isLoader = false
+                this.responseMessageObj = this.errorHandler(e)
             }
         }
     },

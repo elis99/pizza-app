@@ -1,12 +1,23 @@
 <template>
-    <button @click.prevent="buttonEvent" :class="`btn btn-primary ${color} darken-3`">
-        {{buttonText}}
+    <button
+        type="submit"
+        @click.prevent="buttonEvent"
+        :class="`btn btn-primary ${color} darken-3`"
+    >
+    {{buttonText}}
+    <div v-if="isLoader"><Loader/></div>
     </button>
 </template>
 
 <script>
+import Loader from '@/components/Loader/Loader'
+
 export default {
     props: {
+        isLoader: {
+            type: Boolean,
+            default: false
+        },
         buttonText: {
             type: String,
             default: "Submit",
@@ -20,6 +31,9 @@ export default {
             default: 'orange'
         }
     },
+    components: {
+        Loader
+    }
 }
 </script>
 
