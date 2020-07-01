@@ -1,43 +1,52 @@
 <template>
-    <div class="basket-page">
-        <h3>Basket</h3>
-        <ul
-            v-for="data in basketPizzas"
-            :key="`basket-pizza-${data.pizza.id}`"
-            class="collection"
-        >
-            <li class="collection-item avatar">
-            <i class="material-icons circle red">local_pizza</i>
-            <span class="title">{{data.pizza.name}}</span>
-            <span>x <b>{{data.amount}}</b></span>
-            <div class="color-green">
-                 <span>
-                    {{data.pizza.price_eur * data.amount}} euro
-                </span> /
-                <span>
-                    {{data.pizza.price_usd * data.amount}} dollars
-                </span>
+    <div>
+        <div v-if="!isUserAuth">
+            <h4>Please login to use basket</h4>
+        </div>
+        <div v-else class="basket-page">
+            <h3>Basket</h3>
+            <ul
+                v-for="data in basketPizzas"
+                :key="`basket-pizza-${data.pizza.id}`"
+                class="collection"
+            >
+                <li class="collection-item avatar">
+                <i class="material-icons circle red">local_pizza</i>
+                <span class="title">{{data.pizza.name}}</span>
+                <span>x <b>{{data.amount}}</b></span>
+                <div class="color-green">
+                    <span>
+                        {{data.pizza.price_eur * data.amount}} euro
+                    </span> /
+                    <span>
+                        {{data.pizza.price_usd * data.amount}} dollars
+                    </span>
+                </div>
+                </li>
+            </ul>
+            <div v-if="basketPizzas.length > 0">
+                <h4><b>Total price:</b></h4>
+                <div v-if="totalPrices">
+                    <h5>
+                        {{totalPrices.total_eur}}  euro / {{totalPrices.total_usd}} dollars
+                    </h5>
+                    (including delivery)
+                </div>
+                <Loader v-else />
+                <div  class="margin-top-30">
+                    <SubmitButton
+                        :color="'green'"
+                        :buttonEvent="goToPageMakeOrder"
+                        :buttonText="'Confirm Order'"
+                    />
+                    <SubmitButton :color="'red'" :buttonEvent="clearBasket" :buttonText="'Clear Basket'"/>
+                </div>
             </div>
-            </li>
-        </ul>
-        <h4><b>Total price:</b></h4>
-        <div v-if="totalPrices">
-            <h5>
-                 {{totalPrices.total_eur}}  euro / {{totalPrices.total_usd}} dollars
-            </h5>
-            (including delivery)
-        </div>
-        <Loader v-else />
-        <div  class="margin-top-30">
-             <SubmitButton
-                :color="'green'"
-                :buttonEvent="goToPageMakeOrder"
-                :buttonText="'Confirm Order'"
-            />
-            <SubmitButton :color="'red'" :buttonEvent="clearBasket" :buttonText="'Clear Basket'"/>
-        </div>
-        <div v-if="this.responseMessageObj.message">
-               <ResponseCard :messageObj="responseMessageObj"/>
+            <div v-else>Basket is empty:(</div>
+
+            <div v-if="this.responseMessageObj.message">
+                <ResponseCard :messageObj="responseMessageObj"/>
+            </div>
         </div>
     </div>
 </template>
@@ -54,14 +63,21 @@ export default {
     data() {
         return {
             totalPrices: null,
-            basketPizzas: null
+            basketPizzas: null,
+            isUserAuth: false
         }
     },
     created() {
         this.basketPizzas = this.getPizzasFromStore()
         this.getTotalPrices(this.basketPizzas)
+        this.checkUserStatus()
     },
     methods: {
+        checkUserStatus() {
+            if (localStorage.getItem('access_token')) {
+                this.isUserAuth = true
+            }
+        },
         async getTotalPrices(basketPizzas) {
             this.totalPrices = (await Api.getTotalPrices(basketPizzas)).data
         },

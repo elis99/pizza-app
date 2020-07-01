@@ -10,9 +10,9 @@
       </a>
       <ul id="nav-mobile" class="left">
         <li :class="checkIsActiveClass('/')"><a href="/">Pizza</a></li>
-        <li :class="checkIsActiveClass('/my_orders')"><a href="/my_orders">My Orders</a></li>
-        <li :class="checkIsActiveClass('/login')"><a href="/login">Login</a></li>
-        <li><a @click="logout">Logout</a></li>
+        <li v-if="isUserAuth" :class="checkIsActiveClass('/my_orders')"><a href="/my_orders">My Orders</a></li>
+        <li v-else :class="checkIsActiveClass('/login')"><a href="/login">Login</a></li>
+        <li v-if="isUserAuth"><a @click="logout">Logout</a></li>
       </ul>
       <a href="/basket" class="waves-effect waves-light btn right orange basket">
         <div class="material-icons basket-icon">shopping_basket</div>
@@ -30,9 +30,18 @@ export default {
     data(){
         return {
             currentRoutePath: this.$route.path,
+            isUserAuth: false
         }
     },
+    created() {
+        this.checkUserStatus()
+    },
     methods: {
+        checkUserStatus() {
+            if (localStorage.getItem('access_token')) {
+                this.isUserAuth = true
+            }
+        },
         checkIsActiveClass(routePath){
             if(this.currentRoutePath === routePath) return 'active'
         },

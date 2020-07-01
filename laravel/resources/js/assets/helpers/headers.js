@@ -6,5 +6,5 @@ export default {
     },
     dropAuthHeader: () => {
         localStorage.removeItem('access_token')
-    }
+    },
 }
