@@ -14,7 +14,7 @@
                 <label for="password">Password*</label>
                 </div>
             </div>
-            <SubmitButton :buttonEvent="login" :buttonText="'Login'"/>
+            <SubmitButton :isLoader="isLoader" :buttonEvent="login" :buttonText="'Login'"/>
             <div class="not-registered">Not registered? <a href="/register">Register!</a></div>
             <div v-if="this.responseMessageObj.message">
                <ResponseCard :messageObj="responseMessageObj"/>
@@ -36,20 +36,31 @@ export default {
             data: {
                 email: '',
                 password: ''
-            }
+            },
+            isLoader: false
         }
     },
     methods: {
         async login() {
             try {
-                const response = await ApiAuth.register(this.data)
-                this.responseMessageObj = this.successHandler()
-                                console.log('COORRe')
+                this.isLoader = true
 
+                const response = await ApiAuth.login(this.data)
+                // console.log(response, 'RESP')
+                if (response && response.status === 201) {
+                    this.setAuthUser(response.data)
+                } else {
+                    // console.log(response, "responsere");
+                   this.checkErrorForValidation(response)
+                }
+                this.isLoader = false
             } catch (e) {
-                console.log('eeee', e)
-                this.responseMessageObj = this.errorHandler()
+                this.isLoader = false
+                this.responseMessageObj = this.errorHandler(e)
             }
+        },
+        setAuthUser(data) {
+            this.$store.commit('setAuthUser', data)
         }
     },
     components: {

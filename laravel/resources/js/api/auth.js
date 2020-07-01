@@ -13,12 +13,12 @@ export default {
             })
     },
     login: async data => {
-        await axios.post(`${API_ROUTE}/user/login`, data)
+        return await axios.post(`${API_ROUTE}/user/login`, data)
             .then((response) => {
-                console.log(response)
+                return response
             })
             .catch((error) => {
-                console.error(error)
+                return error
             })
     }
 }

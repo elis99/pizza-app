@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                <input v-model="data.password" id="password" min="6" type="password" class="validate" required>
+                <input v-model="data.password" id="password" type="password" class="validate" required>
                 <label for="password">Password*</label>
                 </div>
             </div>
