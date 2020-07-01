@@ -23,8 +23,42 @@
 </template>
 
 <script>
-export default {
+import Api from '@/api/index'
+import ResponseCard from '@/components/Common/ResponseCard'
+import ResponseMessageHandler from '@/assets/mixins/ResponseMessageHandler'
 
+export default {
+    mixins: [ResponseMessageHandler],
+    data() {
+        return {
+            myOrders: null
+        }
+    },
+    created() {
+        this.getMyOrders();
+    },
+    methods: {
+        async getMyOrders() {
+            try {
+                this.isLoader = true
+
+                const response = await Api.getMyOrders(this.data)
+                console.log(response, 'RESP')
+                if (response && response.status === 200) {
+                    this.myOrders = response.data
+                } else {
+                    this.checkError(response)
+                }
+                this.isLoader = false
+            } catch (e) {
+                this.isLoader = false
+                this.responseMessageObj = this.errorHandler(e)
+            }
+        },
+    },
+    components: {
+        ResponseCard
+    }
 }
 </script>
 

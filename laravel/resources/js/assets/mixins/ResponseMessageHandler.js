@@ -8,7 +8,7 @@ export default {
         }
     },
     methods: {
-        checkErrorForValidation(response) {
+        checkError(response) {
             let message = null
 
             if (response.response.status === 422) {

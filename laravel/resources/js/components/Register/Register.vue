@@ -61,7 +61,7 @@ export default {
                 if (response && response.status === 201) {
                     this.responseMessageObj = this.successHandler("Registration almost complete, please check your Email")
                 } else {
-                   this.checkErrorForValidation(response)
+                   this.checkError(response)
                 }
                 this.isLoader = false
             } catch (e) {

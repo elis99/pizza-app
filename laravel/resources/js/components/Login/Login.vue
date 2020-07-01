@@ -46,12 +46,10 @@ export default {
                 this.isLoader = true
 
                 const response = await ApiAuth.login(this.data)
-                // console.log(response, 'RESP')
                 if (response && response.status === 201) {
                     this.setAuthUser(response.data)
                 } else {
-                    // console.log(response, "responsere");
-                   this.checkErrorForValidation(response)
+                   this.checkError(response)
                 }
                 this.isLoader = false
             } catch (e) {

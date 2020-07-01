@@ -9,7 +9,16 @@ export default {
                 return response
             })
             .catch((error) => {
-                console.log(error)
+                return error
+            })
+    },
+    getMyOrders: async () => {
+        return await axios.get(`${API_ROUTE}/order`)
+            .then((response) => {
+                return response
+            })
+            .catch((error) => {
+                return error
             })
     }
 }
