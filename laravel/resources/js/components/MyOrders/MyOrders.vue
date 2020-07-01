@@ -2,6 +2,7 @@
   <div>
       <div class="basket-page">
         <h3>My Orders</h3>
+        <p>(last 5)</p>
         <ul v-for="order in myOrders" :key="`my-order-${order.id}`" class="collection">
             <li class="collection-item avatar">
             <i class="material-icons circle red">local_pizza</i>

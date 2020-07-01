@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements UserInterface {
 
@@ -45,5 +46,10 @@ class UserRepository implements UserInterface {
             'token' => $tokenData,
             'user' => UserResource::make($foundUser)
         ];
+    }
+
+    public function dropAuthAccessToken()
+    {
+        Auth::user()->revokeTokens();
     }
 }

@@ -1,8 +1,9 @@
 import axios from 'axios'
+import headers from '@/assets/helpers/headers'
 
 const API_ROUTE = 'api/v1'
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`
+headers.setAuthHeader()
 
 export default {
     getPizzas: async () => {
@@ -23,7 +24,16 @@ export default {
                 return error
             })
     },
-    getTotalPrices: async (data) => {
+    makeOrder: async data => {
+        return await axios.post(`${API_ROUTE}/order`, data)
+        .then((response) => {
+            return response
+        })
+        .catch((error) => {
+            return error
+        })
+    },
+    getTotalPrices: async data => {
         return await axios.post(`${API_ROUTE}/order/calc`, data)
             .then((response) => {
                 return response

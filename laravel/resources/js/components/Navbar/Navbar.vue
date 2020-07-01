@@ -12,7 +12,7 @@
         <li :class="checkIsActiveClass('/')"><a href="/">Pizza</a></li>
         <li :class="checkIsActiveClass('/my_orders')"><a href="/my_orders">My Orders</a></li>
         <li :class="checkIsActiveClass('/login')"><a href="/login">Login</a></li>
-        <!-- <li><a @click="logout">Logout</a></li> -->
+        <li><a @click="logout">Logout</a></li>
       </ul>
       <a href="/basket" class="waves-effect waves-light btn right orange basket">
         <div class="material-icons basket-icon">shopping_basket</div>
@@ -23,6 +23,9 @@
 </template>
 
 <script>
+import ApiAuth from '@/api/auth'
+import headers from '@/assets/helpers/headers'
+
 export default {
     data(){
         return {
@@ -32,6 +35,10 @@ export default {
     methods: {
         checkIsActiveClass(routePath){
             if(this.currentRoutePath === routePath) return 'active'
+        },
+        async logout() {
+           const response = await ApiAuth.logout()
+           headers.dropAuthHeader()
         }
     }
 }
