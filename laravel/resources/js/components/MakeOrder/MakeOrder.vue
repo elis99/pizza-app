@@ -17,7 +17,7 @@
             <label for="email">Address</label>
             </div>
         </div>
-        <SubmitButton :color="'green'" :buttonEvent="makeOrder" :buttonText="'Make Order'"/>
+        <SubmitButton  :isLoader="isLoader" :color="'green'" :buttonEvent="makeOrder" :buttonText="'Make Order'"/>
         </form>
          <div v-if="responseMessageObj.message">
                <ResponseCard :messageObj="responseMessageObj"/>
@@ -40,7 +40,8 @@ export default {
                 address: null,
                 pizzas: null
             },
-            userData: null
+            userData: null,
+            isLoader: false
         }
     },
     created() {

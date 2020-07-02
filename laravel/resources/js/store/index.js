@@ -18,7 +18,12 @@ const store = new Vuex.Store({
         setAuthUser(state, payload) {
             state.user.first_name = payload.user.first_name
             state.user.last_name = payload.user.last_name
+            state.user.access_token = payload.user.access_token
             localStorage.setItem('access_token', payload.token.access_token);
+        },
+        removeAuthUser(state) {
+            state.user = {}
+            localStorage.removeItem('access_token')
         },
         addToBasket (state, payloud) {
             state.basketTotal++

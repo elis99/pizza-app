@@ -3,8 +3,8 @@
         <div v-if="!isUserAuth">
             <h4>Please login to use basket</h4>
         </div>
-        <div v-else class="basket-page">
-            <h3>Basket</h3>
+        <h3 v-else>Basket</h3>
+        <div  v-if="basketPizzas && basketPizzas.length > 0" class="basket-page">
             <ul
                 v-for="data in basketPizzas"
                 :key="`basket-pizza-${data.pizza.id}`"
@@ -24,7 +24,7 @@
                 </div>
                 </li>
             </ul>
-            <div v-if="basketPizzas.length > 0">
+            <div>
                 <h4><b>Total price:</b></h4>
                 <div v-if="totalPrices">
                     <h5>
@@ -42,12 +42,11 @@
                     <SubmitButton :color="'red'" :buttonEvent="clearBasket" :buttonText="'Clear Basket'"/>
                 </div>
             </div>
-            <div v-else>Basket is empty:(</div>
-
             <div v-if="this.responseMessageObj.message">
                 <ResponseCard :messageObj="responseMessageObj"/>
             </div>
         </div>
+        <div v-else-if="isUserAuth">Basket is empty:(</div>
     </div>
 </template>
 
@@ -90,6 +89,7 @@ export default {
         clearBasket() {
             window.sessionStorage.clear()
             this.$store.commit('clearBasket')
+            this.basketPizzas = null
             this.responseMessageObj = this.successHandler('Basket was cleared!')
         }
     },

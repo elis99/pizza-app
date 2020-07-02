@@ -47,9 +47,8 @@ export default {
         },
         async logout() {
            const response = await ApiAuth.logout()
-           headers.dropAuthHeader()
-           this.$router.push({ path: '/' })
-
+           this.$store.commit('removeAuthUser')
+           location.replace('/')
         }
     }
 }
