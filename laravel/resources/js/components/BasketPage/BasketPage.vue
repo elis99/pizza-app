@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="max-screen-height">
         <div v-if="!isUserAuth">
             <h4>Please login to use basket</h4>
         </div>

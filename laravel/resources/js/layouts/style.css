@@ -5,3 +5,6 @@
 .color-green {
     color: green;
 }
+.max-screen-height{
+    height: 100vh; 
+}

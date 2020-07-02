@@ -1,7 +1,8 @@
 <template>
-  <div>
-      <div class="basket-page">
-        <h3>My Orders</h3>
+  <div class="max-screen-height">
+    <h3>My Orders</h3>
+      <div v-if="!myOrders.length > 0"> You haven't any orders yet</div>
+      <div v-else class="basket-page">
         <p>(last 5)</p>
         <ul v-for="order in myOrders" :key="`my-order-${order.id}`" class="collection">
             <li class="collection-item avatar">
