@@ -48,8 +48,6 @@ trait ApiToken
             ->handle($request)
             ->getContent();
 
-            dd($response);
-
         $token = json_decode($response);
 
         if (isset($token->error)) {
