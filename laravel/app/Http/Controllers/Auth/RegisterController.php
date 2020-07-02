@@ -18,7 +18,9 @@ class RegisterController extends Controller
     {
         $user = $this->userRepo->create($request->validated());
 
-        $user->sendEmailVerificationNotification();
+        // don't send for now, current smtp server
+        // doesnt send mails from external domains
+        // $user->sendEmailVerificationNotification();
 
         return response(null, 201);
     }

@@ -59,7 +59,7 @@ export default {
 
                 const response = await ApiAuth.register(this.data)
                 if (response && response.status === 201) {
-                    this.responseMessageObj = this.successHandler("Registration almost complete, please check your Email")
+                    this.responseMessageObj = this.successHandler("Done! Try to login now")
                 } else {
                    this.checkError(response)
                 }

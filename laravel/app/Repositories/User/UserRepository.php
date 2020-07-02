@@ -6,6 +6,7 @@ use App\Exceptions\UserNotConfirmedException;
 use App\Exceptions\WrongCredentialsException;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class UserRepository implements UserInterface {
     public function create(array $data): User
     {
         $data['password'] = Hash::make($data['password']);
+        $data['email_verified_at'] = Carbon::now();
 
         return $this->modelClass::create($data);
     }
