@@ -4,7 +4,7 @@
             <h4>Please login to use basket</h4>
         </div>
         <h3 v-else>Basket</h3>
-        <div  v-if="basketPizzas && basketPizzas.length > 0" class="basket-page">
+        <div  v-if="isUserAuth && basketPizzas && basketPizzas.length > 0" class="basket-page">
             <ul
                 v-for="data in basketPizzas"
                 :key="`basket-pizza-${data.pizza.id}`"
